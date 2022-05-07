@@ -1,8 +1,16 @@
 # https://hub.docker.com/_/golang
 FROM golang:1.18.1-alpine
 
-COPY  src /app
+RUN apk add git
 
 WORKDIR /app
 
-CMD ["go", "run", "main.go"]
+RUN go mod init github.com/kiyosumi-png/onion-go
+
+RUN go get github.com/gin-gonic/gin
+
+COPY  src .
+
+EXPOSE 3000
+
+CMD [ "go", "run", "main.go" ]
